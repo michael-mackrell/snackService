@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/catalog/foods")
+@RequestMapping("/catalog/entries")
 class FoodCatalogController(
 	private val foodCatalogService: FoodCatalogService,
 ) {
 
 	@PostMapping
-	fun addFood(@RequestBody request: CreateFoodRequest): Food =
-		foodCatalogService.addFood(request)
+	fun addEntry(@RequestBody request: CreateFoodRequest): Food =
+		foodCatalogService.addEntry(request)
 
 	@GetMapping
-	fun getAllFoods(): List<Food> =
-		foodCatalogService.getAllFoods()
+	fun getAllEntries(): List<Food> =
+		foodCatalogService.getAllEntries()
 
 	@PutMapping("/{uuid}")
-	fun updateFood(
+	fun updateEntry(
 		@PathVariable uuid: UUID,
 		@RequestBody request: UpdateFoodRequest,
-	): Food = foodCatalogService.updateFood(uuid, request)
+	): Food = foodCatalogService.updateEntry(uuid, request)
 
 	@DeleteMapping("/{uuid}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	fun deleteFood(@PathVariable uuid: UUID) =
-		foodCatalogService.deleteFood(uuid)
+	fun deleteEntry(@PathVariable uuid: UUID) =
+		foodCatalogService.deleteEntry(uuid)
 }

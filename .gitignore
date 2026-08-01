@@ -38,3 +38,11 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Local config ###
+application-local.properties
+.env
+
+### TypeSpec ###
+typespec/node_modules/
+typespec/tsp-output/

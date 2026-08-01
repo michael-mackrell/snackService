@@ -1,0 +1,5 @@
+# Copy this file to application-local.properties and fill in your Atlas values.
+# application-local.properties is gitignored — do not commit credentials.
+
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-host>.mongodb.net/?retryWrites=true&w=majority
+MONGODB_DATABASE=snackService

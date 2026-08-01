@@ -1,21 +1,23 @@
 package com.example.snackService.service
 
+import com.example.snackService.document.FoodCatalogDocument
+import com.example.snackService.document.toFood
 import com.example.snackService.dto.CreateFoodRequest
 import com.example.snackService.dto.UpdateFoodRequest
 import com.example.snackService.model.Food
-import com.example.snackService.model.FoodCatalog
+import com.example.snackService.repository.FoodCatalogRepository
 import java.util.UUID
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class FoodCatalogService {
+class FoodCatalogService(
+	private val foodCatalogRepository: FoodCatalogRepository,
+) {
 
-	private val catalog = FoodCatalog(name = "Default Catalog")
-
-	fun addFood(request: CreateFoodRequest): Food {
-		val food = Food(
+	fun addEntry(request: CreateFoodRequest): Food {
+		val entry = FoodCatalogDocument(
 			imageId = request.imageId ?: UUID.randomUUID(),
 			name = request.name,
 			calories = request.calories,
@@ -24,16 +26,17 @@ class FoodCatalogService {
 			fat = request.fat,
 			tasteRating = request.tasteRating,
 		)
-		return catalog.addFood(food)
+		return foodCatalogRepository.save(entry).toFood()
 	}
 
-	fun getAllFoods(): List<Food> = catalog.getAllFoods()
+	fun getAllEntries(): List<Food> =
+		foodCatalogRepository.findAll().map { it.toFood() }
 
-	fun updateFood(uuid: UUID, request: UpdateFoodRequest): Food {
-		val existing = catalog.getFood(uuid)
-			?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found")
-		val updated = Food(
-			uuid = uuid,
+	fun updateEntry(uuid: UUID, request: UpdateFoodRequest): Food {
+		val existing = foodCatalogRepository.findById(uuid).orElseThrow {
+			ResponseStatusException(HttpStatus.NOT_FOUND, "Catalog entry not found")
+		}
+		val updated = existing.copy(
 			imageId = request.imageId ?: existing.imageId,
 			name = request.name,
 			calories = request.calories,
@@ -42,12 +45,13 @@ class FoodCatalogService {
 			fat = request.fat,
 			tasteRating = request.tasteRating,
 		)
-		return catalog.updateFood(updated)
+		return foodCatalogRepository.save(updated).toFood()
 	}
 
-	fun deleteFood(uuid: UUID) {
-		if (!catalog.deleteFood(uuid)) {
-			throw ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found")
+	fun deleteEntry(uuid: UUID) {
+		if (!foodCatalogRepository.existsById(uuid)) {
+			throw ResponseStatusException(HttpStatus.NOT_FOUND, "Catalog entry not found")
 		}
+		foodCatalogRepository.deleteById(uuid)
 	}
 }
