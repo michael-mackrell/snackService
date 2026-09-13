@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class FoodCatalogDocument(
 	@Id
 	val uuid: UUID = UUID.randomUUID(),
-	val imageId: UUID = UUID.randomUUID(),
+	val imageId: UUID? = null,
 	val name: String,
 	val tasteRating: Int,
 ) {

@@ -4,7 +4,7 @@ import java.util.UUID
 
 open class Food(
 	uuid: UUID = UUID.randomUUID(),
-	val imageId: UUID = UUID.randomUUID(),
+	val imageId: UUID? = null,
 	val name: String,
 	val tasteRating: Int,
 ) : Object(uuid) {

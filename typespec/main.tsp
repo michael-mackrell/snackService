@@ -33,8 +33,8 @@ model Object {
 
 /** A food item returned by the API. */
 model Food extends Object {
-  /** Identifier reserved for an associated image (future use). */
-  imageId: uuid;
+  /** Identifier for the current image. Omitted when the food has no image. */
+  imageId?: uuid;
   name: string;
   /** Subjective rating from 1 (worst) to 5 (best). */
   @minValue(1)
@@ -53,24 +53,20 @@ model InventoryFood extends Food {
 // Request DTOs
 // ---------------------------------------------------------------------------
 
-/** Body for POST /catalog/entries. Server generates uuid and imageId if omitted. */
+/** Body for POST /catalog/entries. */
 model CreateFoodRequest {
   name: string;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
-  /** Optional. Server generates one when omitted. */
-  imageId?: uuid;
 }
 
-/** Body for PUT /catalog/entries/{uuid}. Keeps existing imageId when omitted. */
+/** Body for PUT /catalog/entries/{uuid}. Images are managed by the image endpoints. */
 model UpdateFoodRequest {
   name: string;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
-  /** Optional. Existing imageId is kept when omitted. */
-  imageId?: uuid;
 }
 
 // ---------------------------------------------------------------------------
@@ -81,7 +77,7 @@ model UpdateFoodRequest {
 model FoodCatalogDocument {
   @key
   uuid: uuid;
-  imageId: uuid;
+  imageId?: uuid;
   name: string;
   @minValue(1)
   @maxValue(5)
@@ -135,6 +131,30 @@ interface CatalogEntries {
   @delete
   @route("/{uuid}")
   deleteEntry(@path uuid: uuid): NoContent | NotFoundError;
+}
+
+/** Multipart body for a food image upload. */
+model FoodImageUpload {
+  image: HttpPart<bytes>;
+}
+
+@tag("Food Images")
+@route("/catalog/entries/{foodId}/image")
+interface FoodImages {
+  /** Upload or replace a food's image. JPEG, PNG, and WebP up to 5 MB are supported. */
+  @put
+  upload(
+    @path foodId: uuid,
+    @multipartBody body: FoodImageUpload,
+  ): Food | NotFoundError;
+
+  /** Return a food's image bytes. */
+  @get
+  get(@path foodId: uuid): bytes | NotFoundError;
+
+  /** Delete a food's current image. */
+  @delete
+  delete(@path foodId: uuid): NoContent | NotFoundError;
 }
 
 @tag("Food Inventory")

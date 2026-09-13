@@ -14,11 +14,11 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 class FoodCatalogService(
 	private val foodCatalogRepository: FoodCatalogRepository,
+	private val foodImageService: FoodImageService,
 ) {
 
 	fun addEntry(request: CreateFoodRequest): Food {
 		val entry = FoodCatalogDocument(
-			imageId = request.imageId ?: UUID.randomUUID(),
 			name = request.name,
 			tasteRating = request.tasteRating,
 		)
@@ -33,7 +33,6 @@ class FoodCatalogService(
 			ResponseStatusException(HttpStatus.NOT_FOUND, "Catalog entry not found")
 		}
 		val updated = existing.copy(
-			imageId = request.imageId ?: existing.imageId,
 			name = request.name,
 			tasteRating = request.tasteRating,
 		)
@@ -44,6 +43,7 @@ class FoodCatalogService(
 		if (!foodCatalogRepository.existsById(uuid)) {
 			throw ResponseStatusException(HttpStatus.NOT_FOUND, "Catalog entry not found")
 		}
+		foodImageService.delete(uuid)
 		foodCatalogRepository.deleteById(uuid)
 	}
 }

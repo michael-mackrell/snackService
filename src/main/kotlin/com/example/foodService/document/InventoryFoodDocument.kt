@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class InventoryFoodDocument(
 	@Id
 	val uuid: UUID,
-	val imageId: UUID,
+	val imageId: UUID?,
 	val name: String,
 	val tasteRating: Int,
 	val quantity: Int,

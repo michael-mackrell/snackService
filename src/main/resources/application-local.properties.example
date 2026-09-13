@@ -3,3 +3,8 @@
 
 MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-host>.mongodb.net/?retryWrites=true&w=majority
 MONGODB_DATABASE=snackService
+
+# Private S3 bucket used for food images. AWS credentials are resolved from the
+# standard AWS SDK credential chain (for example, your local AWS profile).
+S3_IMAGE_BUCKET=<your-private-image-bucket>
+S3_IMAGE_REGION=<your-bucket-region>

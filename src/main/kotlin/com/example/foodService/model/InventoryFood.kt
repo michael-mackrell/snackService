@@ -4,7 +4,7 @@ import java.util.UUID
 
 class InventoryFood(
 	uuid: UUID,
-	imageId: UUID,
+	imageId: UUID?,
 	name: String,
 	tasteRating: Int,
 	val quantity: Int,
