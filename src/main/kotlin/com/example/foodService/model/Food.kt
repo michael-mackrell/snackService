@@ -6,10 +6,6 @@ open class Food(
 	uuid: UUID = UUID.randomUUID(),
 	val imageId: UUID = UUID.randomUUID(),
 	val name: String,
-	val calories: Int,
-	val protein: Double,
-	val carbs: Double,
-	val fat: Double,
 	val tasteRating: Int,
 ) : Object(uuid) {
 	init {

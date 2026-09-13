@@ -72,10 +72,6 @@ class FoodInventoryServiceTests {
 		uuid = foodId,
 		imageId = imageId,
 		name = "Almonds",
-		calories = 160,
-		protein = 6.0,
-		carbs = 6.0,
-		fat = 14.0,
 		tasteRating = 4,
 	)
 
@@ -83,10 +79,6 @@ class FoodInventoryServiceTests {
 		uuid = foodId,
 		imageId = imageId,
 		name = "Almonds",
-		calories = 160,
-		protein = 6.0,
-		carbs = 6.0,
-		fat = 14.0,
 		tasteRating = 4,
 		quantity = quantity,
 	)

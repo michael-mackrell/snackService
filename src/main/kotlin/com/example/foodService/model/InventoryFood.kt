@@ -6,20 +6,12 @@ class InventoryFood(
 	uuid: UUID,
 	imageId: UUID,
 	name: String,
-	calories: Int,
-	protein: Double,
-	carbs: Double,
-	fat: Double,
 	tasteRating: Int,
 	val quantity: Int,
 ) : Food(
 	uuid = uuid,
 	imageId = imageId,
 	name = name,
-	calories = calories,
-	protein = protein,
-	carbs = carbs,
-	fat = fat,
 	tasteRating = tasteRating,
 ) {
 	init {

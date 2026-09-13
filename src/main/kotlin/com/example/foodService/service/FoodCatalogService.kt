@@ -20,10 +20,6 @@ class FoodCatalogService(
 		val entry = FoodCatalogDocument(
 			imageId = request.imageId ?: UUID.randomUUID(),
 			name = request.name,
-			calories = request.calories,
-			protein = request.protein,
-			carbs = request.carbs,
-			fat = request.fat,
 			tasteRating = request.tasteRating,
 		)
 		return foodCatalogRepository.save(entry).toFood()
@@ -39,10 +35,6 @@ class FoodCatalogService(
 		val updated = existing.copy(
 			imageId = request.imageId ?: existing.imageId,
 			name = request.name,
-			calories = request.calories,
-			protein = request.protein,
-			carbs = request.carbs,
-			fat = request.fat,
 			tasteRating = request.tasteRating,
 		)
 		return foodCatalogRepository.save(updated).toFood()

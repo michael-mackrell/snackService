@@ -11,10 +11,6 @@ data class FoodCatalogDocument(
 	val uuid: UUID = UUID.randomUUID(),
 	val imageId: UUID = UUID.randomUUID(),
 	val name: String,
-	val calories: Int,
-	val protein: Double,
-	val carbs: Double,
-	val fat: Double,
 	val tasteRating: Int,
 ) {
 	init {
@@ -26,9 +22,5 @@ fun FoodCatalogDocument.toFood(): Food = Food(
 	uuid = uuid,
 	imageId = imageId,
 	name = name,
-	calories = calories,
-	protein = protein,
-	carbs = carbs,
-	fat = fat,
 	tasteRating = tasteRating,
 )

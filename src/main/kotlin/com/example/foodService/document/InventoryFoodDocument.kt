@@ -12,10 +12,6 @@ data class InventoryFoodDocument(
 	val uuid: UUID,
 	val imageId: UUID,
 	val name: String,
-	val calories: Int,
-	val protein: Double,
-	val carbs: Double,
-	val fat: Double,
 	val tasteRating: Int,
 	val quantity: Int,
 ) {
@@ -29,10 +25,6 @@ fun InventoryFoodDocument.toInventoryFood(): InventoryFood = InventoryFood(
 	uuid = uuid,
 	imageId = imageId,
 	name = name,
-	calories = calories,
-	protein = protein,
-	carbs = carbs,
-	fat = fat,
 	tasteRating = tasteRating,
 	quantity = quantity,
 )
@@ -42,10 +34,6 @@ fun FoodCatalogDocument.toInventoryFoodDocument(): InventoryFoodDocument =
 		uuid = uuid,
 		imageId = imageId,
 		name = name,
-		calories = calories,
-		protein = protein,
-		carbs = carbs,
-		fat = fat,
 		tasteRating = tasteRating,
 		quantity = 1,
 	)

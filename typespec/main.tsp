@@ -36,13 +36,6 @@ model Food extends Object {
   /** Identifier reserved for an associated image (future use). */
   imageId: uuid;
   name: string;
-  calories: int32;
-  /** Grams of protein. */
-  protein: float64;
-  /** Grams of carbohydrates. */
-  carbs: float64;
-  /** Grams of fat. */
-  fat: float64;
   /** Subjective rating from 1 (worst) to 5 (best). */
   @minValue(1)
   @maxValue(5)
@@ -63,10 +56,6 @@ model InventoryFood extends Food {
 /** Body for POST /catalog/entries. Server generates uuid and imageId if omitted. */
 model CreateFoodRequest {
   name: string;
-  calories: int32;
-  protein: float64;
-  carbs: float64;
-  fat: float64;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
@@ -77,10 +66,6 @@ model CreateFoodRequest {
 /** Body for PUT /catalog/entries/{uuid}. Keeps existing imageId when omitted. */
 model UpdateFoodRequest {
   name: string;
-  calories: int32;
-  protein: float64;
-  carbs: float64;
-  fat: float64;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
@@ -98,10 +83,6 @@ model FoodCatalogDocument {
   uuid: uuid;
   imageId: uuid;
   name: string;
-  calories: int32;
-  protein: float64;
-  carbs: float64;
-  fat: float64;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
