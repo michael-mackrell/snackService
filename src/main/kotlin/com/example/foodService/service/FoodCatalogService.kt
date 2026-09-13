@@ -8,6 +8,7 @@ import com.example.foodService.model.Food
 import com.example.foodService.repository.FoodCatalogRepository
 import java.util.UUID
 import org.springframework.http.HttpStatus
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
@@ -20,13 +21,22 @@ class FoodCatalogService(
 	fun addEntry(request: CreateFoodRequest): Food {
 		val entry = FoodCatalogDocument(
 			name = request.name,
+			category = request.category,
 			tasteRating = request.tasteRating,
 		)
 		return foodCatalogRepository.save(entry).toFood()
 	}
 
-	fun getAllEntries(): List<Food> =
-		foodCatalogRepository.findAll().map { it.toFood() }
+	fun getAllEntries(sort: String? = null): List<Food> {
+		val entries = when (sort) {
+			null -> foodCatalogRepository.findAll()
+			"category" -> foodCatalogRepository.findAll(
+				Sort.by(Sort.Order.asc("category").ignoreCase(), Sort.Order.asc("name").ignoreCase()),
+			)
+			else -> throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported sort option: $sort")
+		}
+		return entries.map { it.toFood() }
+	}
 
 	fun updateEntry(uuid: UUID, request: UpdateFoodRequest): Food {
 		val existing = foodCatalogRepository.findById(uuid).orElseThrow {

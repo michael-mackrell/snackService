@@ -6,12 +6,14 @@ class InventoryFood(
 	uuid: UUID,
 	imageId: UUID?,
 	name: String,
+	category: String,
 	tasteRating: Int,
 	val quantity: Int,
 ) : Food(
 	uuid = uuid,
 	imageId = imageId,
 	name = name,
+	category = category,
 	tasteRating = tasteRating,
 ) {
 	init {

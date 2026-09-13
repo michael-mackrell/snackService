@@ -36,6 +36,7 @@ model Food extends Object {
   /** Identifier for the current image. Omitted when the food has no image. */
   imageId?: uuid;
   name: string;
+  category: string;
   /** Subjective rating from 1 (worst) to 5 (best). */
   @minValue(1)
   @maxValue(5)
@@ -56,6 +57,7 @@ model InventoryFood extends Food {
 /** Body for POST /catalog/entries. */
 model CreateFoodRequest {
   name: string;
+  category: string;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
@@ -79,6 +81,7 @@ model FoodCatalogDocument {
   uuid: uuid;
   imageId?: uuid;
   name: string;
+  category: string;
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
@@ -115,9 +118,9 @@ interface CatalogEntries {
   @post
   addEntry(@body request: CreateFoodRequest): Food;
 
-  /** List all catalog entries. */
+  /** List all catalog entries. Pass `category` to sort by category, then name. */
   @get
-  getAllEntries(): Food[];
+  getAllEntries(@query sort?: "category"): Food[];
 
   /** Update an existing catalog entry. */
   @put

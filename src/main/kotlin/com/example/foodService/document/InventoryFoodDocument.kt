@@ -12,6 +12,7 @@ data class InventoryFoodDocument(
 	val uuid: UUID,
 	val imageId: UUID?,
 	val name: String,
+	val category: String = "Uncategorized",
 	val tasteRating: Int,
 	val quantity: Int,
 ) {
@@ -25,6 +26,7 @@ fun InventoryFoodDocument.toInventoryFood(): InventoryFood = InventoryFood(
 	uuid = uuid,
 	imageId = imageId,
 	name = name,
+	category = category,
 	tasteRating = tasteRating,
 	quantity = quantity,
 )
@@ -34,6 +36,7 @@ fun FoodCatalogDocument.toInventoryFoodDocument(): InventoryFoodDocument =
 		uuid = uuid,
 		imageId = imageId,
 		name = name,
+		category = category,
 		tasteRating = tasteRating,
 		quantity = 1,
 	)
