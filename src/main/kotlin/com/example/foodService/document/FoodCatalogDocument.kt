@@ -1,6 +1,6 @@
-package com.example.snackService.document
+package com.example.foodService.document
 
-import com.example.snackService.model.Food
+import com.example.foodService.model.Food
 import java.util.UUID
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

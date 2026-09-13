@@ -1,8 +1,8 @@
-package com.example.snackService.model
+package com.example.foodService.model
 
 import java.util.UUID
 
-class Food(
+open class Food(
 	uuid: UUID = UUID.randomUUID(),
 	val imageId: UUID = UUID.randomUUID(),
 	val name: String,

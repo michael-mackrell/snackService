@@ -6,16 +6,16 @@ using TypeSpec.Http;
 using TypeSpec.Rest;
 
 /**
- * Snack Service API
+ * Food Service API
  *
  * Domain models, request DTOs, persistence shapes, and catalog endpoints
  * in one place. Mirrors the Kotlin service in src/main/kotlin.
  */
 @service(#{
-  title: "Snack Service",
+  title: "Food Service",
 })
 @server("http://localhost:8080", "Local development")
-namespace SnackService;
+namespace FoodService;
 
 /** RFC 4122 UUID string. */
 @format("uuid")
@@ -47,6 +47,13 @@ model Food extends Object {
   @minValue(1)
   @maxValue(5)
   tasteRating: int32;
+}
+
+/** A food currently stocked in the food inventory. */
+model InventoryFood extends Food {
+  /** Number of units currently in inventory. */
+  @minValue(1)
+  quantity: int32;
 }
 
 // ---------------------------------------------------------------------------
@@ -100,6 +107,12 @@ model FoodCatalogDocument {
   tasteRating: int32;
 }
 
+/** Stored in the legacy `snack_inventory` collection for data compatibility. */
+model InventoryFoodDocument extends FoodCatalogDocument {
+  @minValue(1)
+  quantity: int32;
+}
+
 // ---------------------------------------------------------------------------
 // Errors
 // ---------------------------------------------------------------------------
@@ -141,4 +154,33 @@ interface CatalogEntries {
   @delete
   @route("/{uuid}")
   deleteEntry(@path uuid: uuid): NoContent | NotFoundError;
+}
+
+@tag("Food Inventory")
+@route("/inventory/foods")
+interface FoodInventory {
+  /** List all foods currently in inventory. */
+  @get
+  getAllFoods(): InventoryFood[];
+
+  /** Get one inventory food by its catalog food UUID. */
+  @get
+  @route("/{uuid}")
+  getFood(@path uuid: uuid): InventoryFood | NotFoundError;
+
+  /**
+   * Add one unit of a catalog food to inventory.
+   * Creates the entry with quantity 1 when it is not yet stocked.
+   */
+  @post
+  @route("/{uuid}")
+  addFood(@path uuid: uuid): InventoryFood | NotFoundError;
+
+  /**
+   * Remove one unit from inventory.
+   * Deletes the entry when its quantity reaches zero.
+   */
+  @delete
+  @route("/{uuid}")
+  removeFood(@path uuid: uuid): NoContent | NotFoundError;
 }

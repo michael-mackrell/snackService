@@ -1,11 +1,11 @@
-package com.example.snackService.service
+package com.example.foodService.service
 
-import com.example.snackService.document.FoodCatalogDocument
-import com.example.snackService.document.toFood
-import com.example.snackService.dto.CreateFoodRequest
-import com.example.snackService.dto.UpdateFoodRequest
-import com.example.snackService.model.Food
-import com.example.snackService.repository.FoodCatalogRepository
+import com.example.foodService.document.FoodCatalogDocument
+import com.example.foodService.document.toFood
+import com.example.foodService.dto.CreateFoodRequest
+import com.example.foodService.dto.UpdateFoodRequest
+import com.example.foodService.model.Food
+import com.example.foodService.repository.FoodCatalogRepository
 import java.util.UUID
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service

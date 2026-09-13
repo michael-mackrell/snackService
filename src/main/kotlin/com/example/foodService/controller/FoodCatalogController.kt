@@ -1,9 +1,9 @@
-package com.example.snackService.controller
+package com.example.foodService.controller
 
-import com.example.snackService.dto.CreateFoodRequest
-import com.example.snackService.dto.UpdateFoodRequest
-import com.example.snackService.model.Food
-import com.example.snackService.service.FoodCatalogService
+import com.example.foodService.dto.CreateFoodRequest
+import com.example.foodService.dto.UpdateFoodRequest
+import com.example.foodService.model.Food
+import com.example.foodService.service.FoodCatalogService
 import java.util.UUID
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping

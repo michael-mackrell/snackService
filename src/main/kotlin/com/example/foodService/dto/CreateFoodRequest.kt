@@ -1,8 +1,8 @@
-package com.example.snackService.dto
+package com.example.foodService.dto
 
 import java.util.UUID
 
-data class UpdateFoodRequest(
+data class CreateFoodRequest(
 	val name: String,
 	val calories: Int,
 	val protein: Double,
